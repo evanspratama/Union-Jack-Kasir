@@ -325,4 +325,11 @@ function potonganHarga($IdI,$IdT,$IdP){
 	$idI=mysqli_query($conn,$sql);
 	updateHarga($IdI,$harga);
  }
+ function cutMinumanByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `minuman` where `IdMinuman`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama-$jumlah;
+ 	$sql="UPDATE `minuman` SET `stock`='".$jumlahbaru."' WHERE IdMinuman='".$id."'";
+	mysqli_query($conn,$sql);
+ }
  ?>
