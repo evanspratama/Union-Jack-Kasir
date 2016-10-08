@@ -73,6 +73,7 @@
 		$result[$i]["Tanggal"]=$row ["Tanggal"];
 		$result[$i]["Tipe"]=$row ["Tipe"];
 		$result[$i]["IdPromo"]=$row ["IdPromo"];
+		$result[$i]["status"]=$row ["status"];
 		$i++;
 		}
 		}
