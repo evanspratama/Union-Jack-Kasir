@@ -13,6 +13,7 @@ $result=get("minuman","SELECT * FROM `minuman` WHERE IdMinuman='" .$_GET["id"]. 
 	$data[0]=$result[0]["Nama"];
 	$data[1]=$result[0]["harga"];
 	$data[2]=$result[0]["stock"];
+	$data[3]=$result[0]["tipe"];
 }
 ?>
 <html>
