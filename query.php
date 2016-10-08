@@ -44,11 +44,15 @@
 		return "Data makanan berhasil dimasukan";
 	}
 	if($type=="rokok"){
+		$id=getMaxID("rokok");
+		$id++;
 		$sql="INSERT INTO `rokok`(`IdRokok`, `Nama`, `harga`,`stock`) Values('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
 	if($type=="cemilan"){
+		$id=getMaxID("cemilan");
+		$id++;
 		$sql="INSERT INTO `cemilan`(`IdCemilan`, `Nama`, `harga`,`stock`) Values('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
@@ -114,21 +118,23 @@
 		}
 	}
 	 	if($type== "cemilan"){
-			while($row = mysqli_fetch_assoc($result)){
-			$arrayres[$i]["IdCemilan"]=$row ["IdCemilan"];
-			$arrayres[$i]["Nama"]=$row ["Nama"];
-			$arrayres[$i]["deskripsi"]=$row ["deskripsi"];
-			$arrayres[$i]["harga"]=$row ["harga"];
-			$arrayres[$i]["stock"]=$row ["stock"];
+	 		$arrayres=mysqli_query($conn,$sql);
+			while($row = mysqli_fetch_assoc($arrayres)){
+			$result[$i]["IdCemilan"]=$row ["IdCemilan"];
+			$result[$i]["Nama"]=$row ["Nama"];
+			//$result[$i]["deskripsi"]=$row ["deskripsi"];
+			$result[$i]["harga"]=$row ["harga"];
+			$result[$i]["stock"]=$row ["stock"];
 			$i++;
 			}
 		}
 		if($type== "rokok"){
-			while($row = mysqli_fetch_assoc($result)){
-			$arrayres[$i]["IdRokok"]=$row ["IdRokok"];
-			$arrayres[$i]["Nama"]=$row ["Nama"];
-			$arrayres[$i]["harga"]=$row ["harga"];
-			$arrayres[$i]["stock"]=$row ["stock"];
+			$arrayres=mysqli_query($conn,$sql);
+			while($row = mysqli_fetch_assoc($arrayres)){
+			$result[$i]["IdRokok"]=$row ["IdRokok"];
+			$result[$i]["Nama"]=$row ["Nama"];
+			$result[$i]["harga"]=$row ["harga"];
+			$result[$i]["stock"]=$row ["stock"];
 			$i++;
 			}
 		}	
@@ -187,8 +193,17 @@
 	if($type == "minuman"){
 	$sql="DELETE FROM `minuman` WHERE `IdMinuman`='".$id."'";
 	}
-	if($type == "Invoice"){
+	if($type == "invoice"){
 	$sql="DELETE FROM `Invoice` WHERE `IdInvoice`='".$id."'";
+	}
+	if($type == "promo"){
+	$sql="DELETE FROM `Promo` WHERE `IdPromo`='".$id."'";
+	}
+	if($type == "rokok"){
+	$sql="DELETE FROM `rokok` WHERE `IdRokok`='".$id."'";
+	}
+	if($type == "cemilan"){
+	$sql="DELETE FROM `cemilan` WHERE `IdCemilan`='".$id."'";
 	}
 	mysqli_query($conn,$sql);
  }

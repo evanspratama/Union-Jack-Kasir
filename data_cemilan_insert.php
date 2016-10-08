@@ -8,7 +8,7 @@ if($_GET["id"] == 0){
  $data[2]="";
 }
 else{
-$result=get("Cemilan","SELECT * FROM `Cemilan` WHERE IdCemilan='" .$_GET["id"]. "';");
+$result=get("cemilan","SELECT * FROM `cemilan` WHERE IdCemilan='" .$_GET["id"]. "';");
 	$data[0]=$result[0]["Nama"];
 	$data[1]=$result[0]["harga"];
 	$data[2]=$result[0]["stock"];
@@ -36,10 +36,10 @@ if(isset($_POST["submit"])){
 	$data[1]=$_POST["harga"];
 	$data[2]=$_POST["stock"];
 	if($_GET["id"] == 0){
-	insert("Cemilan",$data);	
+	insert("cemilan",$data);	
 	}
 	else{
-	update("Cemilan",$_GET["id"],$data);
+	update("cemilan",$_GET["id"],$data);
 	}
 }
 ?>
