@@ -1,0 +1,20 @@
+setiap new, ke newinvoice step1, pilih makanan, minuman
+jika sudah ke newinvoice step2, pilih menunya dengan jumlahnya
+dimasukan ke array yang disimpan pada session format arr[jenis,id,jumlah]
+klik tombol submit, balik ke page newinvoice v1.1, akan ditampilkan apa yang dipesan
+pakai php, memakai string explode/split, ketika tombol add ditekan, maka session destroy 
+dan update ke database
+
+$_SESSION["idinvoice1"]=id invoice yg ditampilkan(tidak usah masuk ke input)
+$_SESSION["subtotal"] = harga awal sebelum di diskon dan dipajak
+
+$_SESSION['arr'] = array yang berisikan id barang yang akan di beli dan jumlahnya di dalam string, 
+format= x,y,z. x adalah tipe barang(0= makanan, 1=minuman, 2=cemilan). 
+y adalah id barang. z adalah jumlah barang yang dibeli.
+/menggunakan fungsi explode untuk split stringnya.
+
+$_SESSION["diskonstr"] = merupakan string yang berisikan jumlah diskon yang terdapat pada invoice itu(tidak memakai id)
+$_SESSION["total"] = merupakan total yang harus dibayar oleh pelanggan.
+$_SESSION["staticitem"]
+post paid = merupakan jumlah yang dibayar pelanggan.
+post date = tanggal invoice dibuat.
