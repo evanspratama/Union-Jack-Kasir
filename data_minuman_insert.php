@@ -29,11 +29,11 @@ $result=get("minuman","SELECT * FROM `minuman` WHERE IdMinuman='" .$_GET["id"]. 
 <td>Stock	: </td><td><?php echo "<input type='text' name='stock' value = '" .$data[2]. "'></input>"; ?></td>
 </tr>
 <tr>
-<td>Tipe	: </td><td><?php echo " <select id='tipe'>
-  <option value=0>Botol</option>
-  <option value=1>Sloki</option>
+<td>Tipe	: </td><td><?php echo " <select name='tipe' id='tipe'>
+  <option value= 0>Botol</option>
+  <option value= 1>Sloki</option>
 </select> "; 
-$data[3]=document.getElementById("tipe").options[document.getElementById("tipe").selectedIndex].value;
+//$data[3]=
 ?></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@ if(isset($_POST["submit"])){
 	$data[0]=$_POST["Nama"];
 	$data[1]=$_POST["harga"];
 	$data[2]=$_POST["stock"];
-	$data[3]=$_POST["tipe"];
+	$data[3]=$_POST['tipe'];
 	if($_GET["id"] == 0){
 	insert("minuman",$data);	
 	}

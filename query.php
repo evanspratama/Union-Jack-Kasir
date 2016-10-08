@@ -28,7 +28,7 @@
 	if($type=="minuman"){
 		$id=getMaxID("minuman");
 		$id++;
-		$sql="INSERT INTO `minuman`(`IdMinuman`, `Nama`, `harga`, `stock`) VALUES('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
+		$sql="INSERT INTO `minuman`(`IdMinuman`, `Nama`, `harga`, `stock`,`tipe`) VALUES('".$id."','".$data[0]."','".$data[1]."','".$data[2]."','".$data[3]."');";
 		mysqli_query($conn,$sql);
 		return "Data minuman berhasil dimasukan";
 	}
@@ -90,7 +90,7 @@
  function update($type,$id,$data){
 	global $conn;
 	if($type=="minuman"){
-	$sql="UPDATE `minuman` SET `IdMinuman`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdMinuman='".$id."'";
+	$sql="UPDATE `minuman` SET `IdMinuman`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."',`tipe`='".$data[3]."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
 	}
 	if($type=="makanan"){
