@@ -309,7 +309,18 @@ ALTER TABLE `makanan`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`Tipe`);
+  
+  --
+-- Indexes for table `rokok`
+--
+ALTER TABLE `rokok`
+  ADD PRIMARY KEY (`rokok`);
 
+--
+-- Indexes for table `cemilan`
+--
+ALTER TABLE `cemilan`
+  ADD PRIMARY KEY (`cemilan`);
 --
 -- Indexes for table `minuman`
 --
@@ -335,6 +346,21 @@ ALTER TABLE `pesanan`
 ALTER TABLE `pesanan_makanan`
   ADD KEY `IdPesanan` (`IdPesanan`),
   ADD KEY `IdMakanan` (`IdMakanan`);
+  
+--
+-- Indexes for table `pesanan_rokok`
+--
+ALTER TABLE `pesanan_rokok`
+  ADD KEY `IdPesanan` (`IdPesanan`),
+  ADD KEY `IdRokok` (`IdRokok`);
+
+--
+-- Indexes for table `pesanan_cemilan`
+--
+ALTER TABLE `pesanan_cemilan`
+  ADD KEY `IdPesanan` (`IdPesanan`),
+  ADD KEY `IdCemilan` (`IdCemilan`);
+
 
 --
 -- Indexes for table `pesanan_minuman`
@@ -379,6 +405,20 @@ ALTER TABLE `pesanan`
 ALTER TABLE `pesanan_makanan`
   ADD CONSTRAINT `pesanan_makanan_ibfk_1` FOREIGN KEY (`IdPesanan`) REFERENCES `pesanan` (`IdPesanan`),
   ADD CONSTRAINT `pesanan_makanan_ibfk_2` FOREIGN KEY (`IdMakanan`) REFERENCES `makanan` (`IdMakanan`);
+
+--
+-- Constraints for table `pesanan_rokok`
+--
+ALTER TABLE `pesanan_rokok`
+  ADD CONSTRAINT `pesanan_rokok_ibfk_1` FOREIGN KEY (`IdPesanan`) REFERENCES `pesanan` (`IdPesanan`),
+  ADD CONSTRAINT `pesanan_rokok_ibfk_2` FOREIGN KEY (`IdRokok`) REFERENCES `rokok` (`IdRokok`);
+
+--
+-- Constraints for table `pesanan_cemilan`
+--
+ALTER TABLE `pesanan_cemilan`
+  ADD CONSTRAINT `pesanan_cemilan_ibfk_1` FOREIGN KEY (`IdPesanan`) REFERENCES `pesanan` (`IdPesanan`),
+  ADD CONSTRAINT `pesanan_cemilan_ibfk_2` FOREIGN KEY (`IdCemilan`) REFERENCES `cemilan` (`IdCemilan`);
 
 --
 -- Constraints for table `pesanan_minuman`
