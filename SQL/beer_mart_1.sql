@@ -289,6 +289,25 @@ CREATE TABLE `paket` (
 ALTER TABLE `paket`
   ADD PRIMARY KEY (`idPaket`),
   ADD KEY `idMinuman` (`idMinuman`);
+
+
+--
+-- Table structure for table `hutang`
+--
+CREATE TABLE `hutang` (
+  `IdInvoice` int(11) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for table `hutang`
+--
+
+ALTER TABLE `hutang`
+  ADD KEY `IdInvoice` (`IdInvoice`);
+
+  
 --
 -- Indexes for table `invoice`
 --
@@ -398,6 +417,12 @@ ALTER TABLE `invoice`
 --
 ALTER TABLE `pesanan`
   ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`IdInvoice`) REFERENCES `invoice` (`IdInvoice`);
+  
+--
+-- Constraints for table `hutang`
+--
+ALTER TABLE `hutang`
+  ADD CONSTRAINT `hutang_ibfk_1` FOREIGN KEY (`IdInvoice`) REFERENCES `invoice` (`IdInvoice`);
 
 --
 -- Constraints for table `pesanan_makanan`
