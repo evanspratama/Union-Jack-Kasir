@@ -57,6 +57,14 @@
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
+	if($type=="paket"){
+		$id=getMaxID("paket");
+		$id++;
+		$sql="INSERT INTO `paket`(`IdPaket`, `Nama`, `IdMinuman`,`jumlah`) Values('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
+		mysqli_query($conn,$sql);
+		return "Data makanan berhasil dimasukan";
+	}
+	
  }
  function get($type,$sql){
 	global $conn;
@@ -78,6 +86,9 @@
 			break;
 			case "promo":
 				$sql="SELECT * FROM promo";
+			break;
+			case "paket":
+				$sql="SELECT * FROM paket";
 			break;
 			default:
 				return null;
