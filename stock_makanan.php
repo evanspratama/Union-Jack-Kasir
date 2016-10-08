@@ -18,7 +18,7 @@ delete("makanan",$id);
 <th>ID_Makanan</th>
 <th>Nama</th>
 <th>Harga</th>
-<th>Stock</th>
+<th>Keluar</th>
 </tr>
 <?php
 for($i=0;$i<sizeof($makan);$i++){

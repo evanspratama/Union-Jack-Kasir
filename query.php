@@ -12,6 +12,12 @@
 	if($type == "promo"){
 	$sql = "SELECT max(IdPromo) as res from promo";		 
 	}
+	if($type == "rokok"){
+	$sql = "SELECT max(IdRokok) as res from rokok";		 
+	}
+	if($type == "cemilan"){
+	$sql = "SELECT max(IdCemilan) as res from cemilan";		 
+	}
 	$res = mysqli_fetch_assoc(mysqli_query($conn,$sql));
 	return $res["res"];
  }
@@ -21,7 +27,7 @@
 	if($type=="makanan"){
 		$id=getMaxID("makanan");
 		$id++;
-		$sql="INSERT INTO `makanan`(`IdMakanan`, `Nama`, `harga`, `stock`) VALUES('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
+		$sql="INSERT INTO `makanan`(`IdMakanan`, `Nama`, `harga`, `stock`) VALUES('".$id."','".$data[0]."','".$data[1]."',0);";
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
@@ -34,6 +40,16 @@
 	}
 	if($type=="promo"){
 		$sql="INSERT INTO `promo`(`IdPromo`, `Nama`, `Diskon`) Values('".$id."','".$data[0]."','".$data[1]."');";
+		mysqli_query($conn,$sql);
+		return "Data makanan berhasil dimasukan";
+	}
+	if($type=="rokok"){
+		$sql="INSERT INTO `rokok`(`IdRokok`, `Nama`, `harga`,`stock`) Values('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
+		mysqli_query($conn,$sql);
+		return "Data makanan berhasil dimasukan";
+	}
+	if($type=="cemilan"){
+		$sql="INSERT INTO `cemilan`(`IdCemilan`, `Nama`, `harga`,`stock`) Values('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
@@ -106,6 +122,15 @@
 			$arrayres[$i]["stock"]=$row ["stock"];
 			$i++;
 			}
+		}
+		if($type== "rokok"){
+			while($row = mysqli_fetch_assoc($result)){
+			$arrayres[$i]["IdRokok"]=$row ["IdRokok"];
+			$arrayres[$i]["Nama"]=$row ["Nama"];
+			$arrayres[$i]["harga"]=$row ["harga"];
+			$arrayres[$i]["stock"]=$row ["stock"];
+			$i++;
+			}
 		}	
 		if($type== "promo"){
 		$arrayres=mysqli_query($conn,$sql);
@@ -126,11 +151,19 @@
 	mysqli_query($conn,$sql);
 	}
 	if($type=="makanan"){
-	$sql="UPDATE `makanan` SET `IdMakanan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdMakanan='".$id."'";
+	$sql="UPDATE `makanan` SET `IdMakanan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."' WHERE IdMakanan='".$id."'";
 	mysqli_query($conn,$sql);
 	}
 	if($type=="promo"){
 	$sql="UPDATE `promo` SET `IdPromo`='".$id."',`Nama`='".$data[0]."',`Diskon`='".$data[1]."' WHERE IdPromo='".$id."'";
+	mysqli_query($conn,$sql);
+	}
+	if($type=="rokok"){
+	$sql="UPDATE `rokok` SET `IdRokok`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdRokok='".$id."'";
+	mysqli_query($conn,$sql);
+	}
+	if($type=="makanan"){
+	$sql="UPDATE `cemilan` SET `IdCemilan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdCemilan='".$id."'";
 	mysqli_query($conn,$sql);
 	}
  }
