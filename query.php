@@ -42,7 +42,28 @@
 	global $conn;
 	$i=0;
 	$result=array();
-	
+	if($sql==""){
+		switch($type){
+			case "Invoice":
+				$sql="SELECT * FROM invoice";
+			break;
+			case "minuman":
+				$sql="SELECT * FROM minuman";
+			break;
+			case "makanan":
+				$sql="SELECT * FROM makanan";
+			break;
+			case "cemilan":
+				$sql="SELECT * FROM cemilan";
+			break;
+			case "promo":
+				$sql="SELECT * FROM promo";
+			break;
+			default:
+				return null;
+			break;
+		}
+	}
 	if($type== "Invoice"){
 		$arrayres=mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_assoc($arrayres)){
@@ -75,6 +96,16 @@
 		$i++;
 		}
 	}
+	 	if($type== "cemilan"){
+			while($row = mysqli_fetch_assoc($result)){
+			$arrayres[$i]["IdCemilan"]=$row ["IdCemilan"];
+			$arrayres[$i]["Nama"]=$row ["Nama"];
+			$arrayres[$i]["deskripsi"]=$row ["deskripsi"];
+			$arrayres[$i]["harga"]=$row ["harga"];
+			$arrayres[$i]["stock"]=$row ["stock"];
+			$i++;
+			}
+		}	
 		if($type== "promo"){
 		$arrayres=mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_assoc($arrayres)){
@@ -109,7 +140,7 @@
  	}else{
  		if($_SESSION["tipe"]==0){
  		}else{
- 			header("location: newInvoice.php");
+ 			header("location: index.php");
  		}
  	}
  }
@@ -321,5 +352,13 @@ function potonganHarga($IdI,$IdT,$IdP){
  	$jumlahbaru=$jumlahlama-$jumlah;
  	$sql="UPDATE `minuman` SET `stock`='".$jumlahbaru."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
+ }
+function getRow($sql){
+	global $conn;
+ 	if($result=mysqli_query($conn,$sql)){
+ 		return mysqli_num_rows($result);
+ 	}else{
+ 		return null;
+ 	}
  }
  ?>
