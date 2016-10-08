@@ -9,7 +9,7 @@
 		if($_SESSION["tipe"]==0){
 			header("location:adminhome.php");
 		}else if($_SESSION["tipe"]==1){
-			header("location:newInvoice1.php");
+			header("location:newInvoicefix.php");
 		}
 	}
  ?>
