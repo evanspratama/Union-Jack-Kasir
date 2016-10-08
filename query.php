@@ -9,6 +9,9 @@
 	if($type == "minuman"){
 		$sql = "SELECT max(IdMinuman) as res from minuman";		 
 	}
+	if($type == "promo"){
+	$sql = "SELECT max(IdPromo) as res from promo";		 
+	}
 	$res = mysqli_fetch_assoc(mysqli_query($conn,$sql));
 	return $res["res"];
  }
@@ -29,8 +32,8 @@
 		mysqli_query($conn,$sql);
 		return "Data minuman berhasil dimasukan";
 	}
-	if($type=="dosen"){
-		$sql="INSERT INTO `dosen`(`Id_Dosen`, `Nama_D`, `Email_D`, `Keahlian`, `Pendidikan`, `Username`, `Password`, `NIK`, `Status`) Values('".$data[0]."','".$data[1]."','".$data[2]."','".$data[3]."','".$data[4]."','".$data[5]."','".$data[6]."','".$data[7]."',0);";
+	if($type=="promo"){
+		$sql="INSERT INTO `promo`(`IdPromo`, `Nama`, `Diskon`) Values('".$id."','".$data[0]."','".$data[1]."');";
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
@@ -62,7 +65,7 @@
 		$i++;
 		}
 	}
-			if($type== "makanan"){
+		if($type== "makanan"){
 		$arrayres=mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_assoc($arrayres)){
 		$result[$i]["IdMakanan"]=$row ["IdMakanan"];
@@ -71,16 +74,21 @@
 		$result[$i]["stock"]=$row ["stock"];
 		$i++;
 		}
+	}
+		if($type== "promo"){
+		$arrayres=mysqli_query($conn,$sql);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["IdPromo"]=$row ["IdPromo"];
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["Diskon"]=$row ["Diskon"];
+		$i++;
+		}
 	}	
 	return $result;
  }
 
  function update($type,$id,$data){
 	global $conn;
-	if($type=="dosen"){
-	$sql="UPDATE `dosen` SET `Id_Dosen`='".$data[0]."',`Nama_D`='".$data[1]."',`Email_D`='".$data[2]."',`Keahlian`='".$data[3]."',`Pendidikan`='".$data[4]."',`Username`='".$data[5]."',`Password`='".$data[6]."',`NIK`='".$data[7]."',`Status`='".$data[8]."' WHERE Id_Dosen='".$id."'";
-	mysqli_query($conn,$sql);
-	}
 	if($type=="minuman"){
 	$sql="UPDATE `minuman` SET `IdMinuman`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
@@ -89,27 +97,9 @@
 	$sql="UPDATE `makanan` SET `IdMakanan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdMakanan='".$id."'";
 	mysqli_query($conn,$sql);
 	}
-	
-	if($type=="ambil_mk"){
-	$na=null;
-	if($data[0]>=80){
-	$na="A";
-	}
-	else if($data[0]<80 and $data[0]>=70){
-	$na="B";
-	}
-	else if($data[0]<70 and $data[0]>=60){
-	$na="C";
-	}
-	else if($data[0]<60 and $data[0]>=50){
-	$na="D";
-	}
-	else{
-	$na="E";
-	}
-	$sql="UPDATE `ambil_mk` SET `AngkaAkhir`='".$data[0]."',`NilaiAkhir`='".$na."' where NPM='".$id."' and Id_MK ='".$data[1]."'";
+	if($type=="promo"){
+	$sql="UPDATE `promo` SET `IdPromo`='".$id."',`Nama`='".$data[0]."',`Diskon`='".$data[1]."' WHERE IdPromo='".$id."'";
 	mysqli_query($conn,$sql);
-	return "masukan nilai berhasil";
 	}
  }
  session_start();
