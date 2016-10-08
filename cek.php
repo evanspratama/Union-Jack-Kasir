@@ -12,7 +12,7 @@
 			if ($_POST["tipe"]==0) {
 				header ("location:adminhome.php");
 			}else{
-				header ("location:newInvoice1.php");
+				header ("location:newInvoicefix.php");
 			}
 		 
 		}
