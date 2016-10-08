@@ -130,7 +130,7 @@ CREATE TABLE `minuman` (
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
-  `tipe` int(1) DEFAULT NULL,
+  `tipe` int(11) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
