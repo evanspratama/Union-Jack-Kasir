@@ -212,7 +212,51 @@
 	$total=mysqli_query($conn,$sql);
 	$sql="SELECT `IdInvoice` from `pesanan` where `IdPesanan`='".$idP."'";
 	$idI=mysqli_query($conn,$sql);
-	$sql="UPDATE `Makanan` SET `Stock`= `Stock` - '1' WHERE IdMakanan='".$idM."'";
+	$sql="UPDATE `Invoice` SET `totalharga`='".$total."' WHERE IdInvoice='".$idI."'";
+	mysqli_query($conn,$sql);
+	$sql="UPDATE `Makanan` SET `Stock`= `Stock` + '1' WHERE IdMakanan='".$idM."'";
+	mysqli_query($conn,$sql);
+ }
+
+function pesananCemilan($idP,$idC){
+ 	global $conn;
+ 	$harga=0;
+ 	$total=0;
+ 	$idI=0;
+ 	$sql="SELECT `harga` from Cemilan where Cemilan.IdCemilan='".$idC."'";
+ 	$harga= mysqli_query($conn,$sql);
+ 	$sql2= "INSERT INTO `pesanan_Cemilan`(`IdPesanan`, `IdCemilan`) Values('".$idP."','".$idC."');";
+	mysqli_query($conn,$sql2);
+	$sql="UPDATE `pesanan` SET `harga`=`harga` + '".$harga."' WHERE IdPesanan='".$idP."'";
+	mysqli_query($conn,$sql);
+	$sql="SELECT SUM(pesanan.harga) from `pesanan`  inner join `Invoice` on pesanan.idInvoice=Invoice.idInvoice  where pesanan.idPesanan='".$idP."'";
+	$total=mysqli_query($conn,$sql);
+	$sql="SELECT `IdInvoice` from `pesanan` where `IdPesanan`='".$idP."'";
+	$idI=mysqli_query($conn,$sql);
+	$sql="UPDATE `Invoice` SET `totalharga`='".$total."' WHERE IdInvoice='".$idI."'";
+	mysqli_query($conn,$sql);
+	$sql="UPDATE `Cemilan` SET `Stock`= `Stock` - '1' WHERE IdCemilan='".$idC."'";
+	mysqli_query($conn,$sql);
+ }
+
+function pesananRokok($idP,$idR){
+ 	global $conn;
+ 	$harga=0;
+ 	$total=0;
+ 	$idI=0;
+ 	$sql="SELECT `harga` from Rokok where Rokok.IdRokok='".$idR."'";
+ 	$harga= mysqli_query($conn,$sql);
+ 	$sql2= "INSERT INTO `pesanan_Rokok`(`IdPesanan`, `IdRokok`) Values('".$idP."','".$idR."');";
+	mysqli_query($conn,$sql2);
+	$sql="UPDATE `pesanan` SET `harga`=`harga` + '".$harga."' WHERE IdPesanan='".$idP."'";
+	mysqli_query($conn,$sql);
+	$sql="SELECT SUM(pesanan.harga) from `pesanan`  inner join `Invoice` on pesanan.idInvoice=Invoice.idInvoice  where pesanan.idPesanan='".$idP."'";
+	$total=mysqli_query($conn,$sql);
+	$sql="SELECT `IdInvoice` from `pesanan` where `IdPesanan`='".$idP."'";
+	$idI=mysqli_query($conn,$sql);
+	$sql="UPDATE `Invoice` SET `totalharga`='".$total."' WHERE IdInvoice='".$idI."'";
+	mysqli_query($conn,$sql);
+	$sql="UPDATE `Cemilan` SET `Stock`= `Stock` - '1' WHERE IdRokok='".$idR."'";
 	mysqli_query($conn,$sql);
  }
 
