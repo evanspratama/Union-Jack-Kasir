@@ -53,7 +53,8 @@ CREATE TABLE `makanan` (
   `IdMakanan` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL
+  `stock` int(11) DEFAULT NULL,
+  'deskripsi' varchar(255) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -82,7 +83,8 @@ CREATE TABLE `rokok` (
   `IdRokok` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL
+  `stock` int(11) DEFAULT NULL.
+  'deskripsi' varchar(255) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -95,7 +97,8 @@ CREATE TABLE `cemilan` (
   `IdCemilan` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL
+  `stock` int(11) DEFAULT NULL,
+  'deskripsi' varchar(255) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -130,7 +133,8 @@ CREATE TABLE `minuman` (
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
-  `tipe` int(11) DEFAULT NULL
+  `tipe` int(11) DEFAULT NULL,
+  'deskripsi' varchar(255) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
