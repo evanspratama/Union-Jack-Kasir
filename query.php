@@ -391,17 +391,32 @@ function getPromo($IdP){
 	$diskon=mysqli_query($conn,$sql);
 	return $diskon;
 }
-
-function potonganHarga($IdI,$IdT,$IdP){
- 	global $conn;
- 	$diskon=0;
- 	$diskon1=0;
- 	$harga =0;
- 	$harga1=0;
- 	$harga2=0;
- 	$harga3=0;
- 	$harga = setTotalHarga($IdP);
- 	if(($IdT != null or $IdT != 0)and($IdP != null or $IdP!=0))
+function getdiscmember($IdT){
+	global $conn;
+ 	
+ 	$result = array();
+	$sql="SELECT Diskon FROM MEMBER";
+	$i=0;
+	$arrayres=mysqli_query($conn,$sql);
+	while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]=(int)$row ["Diskon"];
+		$i++;
+	}
+	return $result[$IdT-1];
+}
+function potonganHarga($IdT,$harga){
+	$diskon= getdiscmember($IdT);
+	if ($diskon==0) {
+ 		return $harga;
+ 	}else{
+ 		$harga=$harga-(($harga*$diskon)/100);
+ 		return $harga;
+ 	}
+ 	//$harga1=0;
+ 	//$harga2=0;
+ 	//$harga3=0;
+ 	//$harga = setTotalHarga($IdP);
+ 	/*if(($IdT != null or $IdT != 0)and($IdP != null or $IdP!=0))
  	{
  		$diskon = getTipe($idT);
 		$harga1 = $harga * 0.01*$diskon;
@@ -424,8 +439,9 @@ function potonganHarga($IdI,$IdT,$IdP){
 		$harga1 = $harga * 0.01*$diskon1;
 		$harga2 = $harga - $harga1;
 		$harga = $harga2;
- 	}
- 	updateHarga($IdI,$harga);
+ 	}*/
+ 	return $harga;
+ 	//updateHarga($IdI,$harga);
  }
 
  function delPesananMinuman($IdP,$IdM){
