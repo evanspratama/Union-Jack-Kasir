@@ -18,6 +18,12 @@
 	if($type == "cemilan"){
 	$sql = "SELECT max(IdCemilan) as res from cemilan";		 
 	}
+	if($type == "paket"){
+	$sql = "SELECT max(IdPaket) as res from paket";		 
+	}
+	if($type == "temp"){
+	$sql = "SELECT max(IdTemp) as res from temp";		 
+	}
 	$res = mysqli_fetch_assoc(mysqli_query($conn,$sql));
 	return $res["res"];
  }
@@ -98,7 +104,7 @@
 				$sql="SELECT * FROM paket";
 			break;
 			case "temp":
-				$sql="SELECT * FROM paket";
+				$sql="SELECT * FROM temp";
 			break;
 			default:
 				return null;
@@ -209,6 +215,10 @@
 	}
 	if($type=="cemilan"){
 	$sql="UPDATE `cemilan` SET `IdCemilan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdCemilan='".$id."'";
+	mysqli_query($conn,$sql);
+	}
+	if($type=="paket"){
+	$sql="UPDATE `paket` SET `IdPaket`='".$id."',`Nama`='".$data[0]."',`IdMinuman`='".$data[1]."',`jumlah`='".$data[2]."' WHERE IdCemilan='".$id."'";
 	mysqli_query($conn,$sql);
 	}
 	if($type=="temp"){
@@ -517,7 +527,21 @@ function potonganHarga($IdI,$IdT,$IdP){
 
  function cutStock(){
 	$sql = "SELECT * from `temp`"
- 	for($i=0;$i<sizeof($makan);$i++){
+	$temp= get("temp",sql)
+ 	for($i=0;$i<sizeof($temp);$i++){
+	if($temp[$i]["Tipe"]== 0){
+	plusMakananByNumber($temp[$i]["Id"],$temp[$i]["Stock"]); 		
+	}
+	if($temp[$i]["Tipe"]== 1){
+	cutMinumanByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	if($temp[$i]["Tipe"]== 2){
+	cutCemilanByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	if($temp[$i]["Tipe"]== 3){
+	cutRokokByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	delete("temp",i+1);
 }
  }
 
