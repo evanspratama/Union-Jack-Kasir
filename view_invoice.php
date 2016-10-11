@@ -9,7 +9,7 @@ delete("Invoice",$id);
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="stock-style.css">
+<link rel="stylesheet" href="css/stock-style.css">
 </head>
 <body>
 <table class="table-fill" border='2'>
@@ -18,8 +18,9 @@ delete("Invoice",$id);
 <td>ID_Pengguna</td>
 <td>Harga</td>
 <td>Tanggal</td>
-<td>Tipe Customer</td>
+<td>Tipe_Pelanggan</td>
 <td>IdPromo</td>
+<td>Status</td>
 <td></td>
 <td></td>
 </tr>
@@ -34,6 +35,16 @@ echo $mkn[$i]["TotalHarga"]."</td><td>";
 echo $mkn[$i]["Tanggal"]."</td><td>";
 echo $mkn[$i]["Tipe"]."</td><td>";
 echo $mkn[$i]["IdPromo"]."</td><td>";
+$tipe=$mkn[$i]["status"]."</td><td>";
+if($tipe==0){
+echo "Lunas</td><td>";
+}
+if($tipe==1){
+echo "Pending</td><td>";
+}
+if($tipe==2){
+echo "Pelunasan Pending</td><td>";
+}
 echo "<a href=\"newInvoice.php?id=$id\">View</a></td><td>";
 //echo " <form action='' method='post'><input type='submit' name='delete' value='Delete'></td>";
 //echo "</tr>";

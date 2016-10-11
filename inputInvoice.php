@@ -13,7 +13,7 @@
 	<link rel='stylesheet' type='text/css' href='css/style.css' />
 	<link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
 	<script type='text/javascript' src='js/jquery-1.3.2.min.js'></script>
-	<script type='text/javascript' src='js/example.js'></script>
+	<!--<script type='text/javascript' src='js/example.js'></script>-->
 
 </head>
 
@@ -92,11 +92,22 @@ c/o Steve Widget</textarea>
 			    <td colspan="5"></td>
 			  </tr>
 		  <tr>
-		      <td colspan="2" class="blank"> </td>
+		      <td colspan="2" class="blank">
+		      
+		      	Diskon member:  
+				<?php 
+					$disc=getdiscmember($_POST["jenismember"]);
+					echo(" ".$disc."%.");
+				 ?>
+		      </td>
 		      <td colspan="2" class="total-line">Subtotal</td>
 		      <td class="total-value"><div id="subtotal">
 				<?php
-					echo $_SESSION["subtotal"];
+					if(isset($_SESSION["subtotal"])){
+						echo $_SESSION["subtotal"];
+					}else{
+						echo "tidak ada barang yang dibeli";
+					}
 				?>
 		      </div></td>
 		  </tr>
@@ -110,7 +121,9 @@ c/o Steve Widget</textarea>
 		      <td colspan="2" class="total-line">Total</td>
 		      <td class="total-value"><div id="total">
 		      <?php
-					echo "Rp.".$_SESSION["total"];
+		      		$hargatemp = potonganHarga($_POST["jenismember"],$_SESSION["total"]);
+					echo "Rp.".$hargatemp;
+					$_SESSION["total"]=$hargatemp;
 				?></div></td>
 		  </tr>
 		  <tr>
@@ -129,12 +142,17 @@ c/o Steve Widget</textarea>
 		      <td colspan="2" class="total-line balance">change</td>
 		      <td class="total-value balance"><div class="due">
 				<?php
-					$temp1 = (int) $_POST["paid"];
-					$temp = $_SESSION["total"]-$temp1;
-					if($temp<0){
-						$temp = $temp*-1;
+				$temp=0;
+					if($_POST["paid"]>=$_SESSION["total"]){
+						$temp1 = (int) $_POST["paid"];
+						$temp = $_SESSION["total"]-$temp1;
+						if($temp<0){
+							$temp = $temp*-1;
+						}else{
+							
+						}
 					}else{
-
+						$temp=0;
 					}
 					echo "Rp.".$temp;
 				?>
@@ -147,7 +165,58 @@ c/o Steve Widget</textarea>
 		  <h5>Terms</h5>
 		  <textarea>Pajak 15%</textarea>
 		</div>
+
 	<?php 
+
+	if(isset($_SESSION['arr'])){
+		$_SESSION["subtotal"]= 0;
+		foreach($_SESSION['arr'] as $key=>$value){
+			$tempstr = explode(",",$value);
+			$jenis = $tempstr[0];
+			$id = $tempstr[1];
+			$jumlah = (int) $tempstr[2];
+
+			switch($jenis){
+			  	case "0":
+
+			  		plusMakananByNumber($id,$jumlah);
+			  		break;
+			  	case "1":
+			  		cutMinumanByNumber($id,$jumlah);
+			  		break;
+			  	case "2":
+			  		cutCemilanByNumber($id,$jumlah);
+			  		break;
+			  	case "3":
+			  		cutRokokByNumber($id,$jumlah);
+			  		echo ("id: ".$id." jumlah: ".$jumlah);
+			  		break;
+			  	default :
+					break;
+			}
+		}
+	}
+
+	$data = array("","","","","");
+	if (isset($_SESSION['diskon'])) {
+		$data[0]=$_SESSION['diskon'];
+	}else{
+		$data[0]=null;	
+	}
+	
+	$data[1]=$_SESSION["total"];
+	$data[2]=(string)$_POST["date"];
+	$data[3]=$_POST["jenismember"];
+	$data[4]=$_SESSION['diskonstr'];
+	$temp = $_SESSION["total"] - $_POST["paid"];
+	if($temp>0){
+		$data[5]=1;
+	}
+	else{
+		$data[5]=0;
+	}
+
+		insert("invoice",$data);
 		unset($_SESSION["idinvoice1"]);
 		unset($_SESSION["subtotal"]);
 		unset($_SESSION['arr']);

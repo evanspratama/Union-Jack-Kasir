@@ -18,6 +18,9 @@
 	if($type == "cemilan"){
 	$sql = "SELECT max(IdCemilan) as res from cemilan";		 
 	}
+		if($type == "invoice"){
+	$sql = "SELECT max(IdInvoice) as res from invoice";		 
+	}
 	$res = mysqli_fetch_assoc(mysqli_query($conn,$sql));
 	return $res["res"];
  }
@@ -57,6 +60,14 @@
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
+	if($type=="invoice"){
+		$id=getMaxID("invoice");
+		$id++;
+		$sql="INSERT INTO `invoice`(`IdInvoice`, `idPengguna`, `TotalHarga`, `Tanggal`,`Tipe`,`IdPromo`,`promo`,`status`) VALUES('".$id."',1,'".$data[1]."','".$data[2]."','1',1,'".$data[4]."','".$data[5]."');";
+		mysqli_query($conn,$sql);
+		return "Data makanan berhasil dimasukan";
+	}
+	
  }
  function get($type,$sql){
 	global $conn;
@@ -89,6 +100,7 @@
 		while($row = mysqli_fetch_assoc($arrayres)){
 		$result[$i]["IdInvoice"]=$row ["IdInvoice"];
 		$result[$i]["idPengguna"]=$row ["idPengguna"];
+
 		$result[$i]["TotalHarga"]=$row ["TotalHarga"];
 		$result[$i]["Tanggal"]=$row ["Tanggal"];
 		$result[$i]["Tipe"]=$row ["Tipe"];
@@ -97,13 +109,16 @@
 		$i++;
 		}
 		}
+
 		if($type== "minuman"){
 		$arrayres=mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_assoc($arrayres)){
 		$result[$i]["IdMinuman"]=$row ["IdMinuman"];
 		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["deskripsi"]=$row ["deskripsi"];
 		$result[$i]["harga"]=$row ["harga"];
 		$result[$i]["stock"]=$row ["stock"];
+		$result[$i]["tipe"]=$row ["tipe"];
 		$i++;
 		}
 	}
@@ -112,6 +127,7 @@
 		while($row = mysqli_fetch_assoc($arrayres)){
 		$result[$i]["IdMakanan"]=$row ["IdMakanan"];
 		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["deskripsi"]=$row ["deskripsi"];
 		$result[$i]["harga"]=$row ["harga"];
 		$result[$i]["stock"]=$row ["stock"];
 		$i++;
@@ -122,7 +138,7 @@
 			while($row = mysqli_fetch_assoc($arrayres)){
 			$result[$i]["IdCemilan"]=$row ["IdCemilan"];
 			$result[$i]["Nama"]=$row ["Nama"];
-			//$result[$i]["deskripsi"]=$row ["deskripsi"];
+			$result[$i]["deskripsi"]=$row ["deskripsi"];
 			$result[$i]["harga"]=$row ["harga"];
 			$result[$i]["stock"]=$row ["stock"];
 			$i++;
@@ -338,17 +354,32 @@ function getPromo($IdP){
 	$diskon=mysqli_query($conn,$sql);
 	return $diskon;
 }
-
-function potonganHarga($IdI,$IdT,$IdP){
- 	global $conn;
- 	$diskon=0;
- 	$diskon1=0;
- 	$harga =0;
- 	$harga1=0;
- 	$harga2=0;
- 	$harga3=0;
- 	$harga = setTotalHarga($IdP);
- 	if(($IdT != null or $IdT != 0)and($IdP != null or $IdP!=0))
+function getdiscmember($IdT){
+	global $conn;
+ 	
+ 	$result = array();
+	$sql="SELECT Diskon FROM MEMBER";
+	$i=0;
+	$arrayres=mysqli_query($conn,$sql);
+	while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]=(int)$row ["Diskon"];
+		$i++;
+	}
+	return $result[$IdT-1];
+}
+function potonganHarga($IdT,$harga){
+	$diskon= getdiscmember($IdT);
+	if ($diskon==0) {
+ 		return $harga;
+ 	}else{
+ 		$harga=$harga-(($harga*$diskon)/100);
+ 		return $harga;
+ 	}
+ 	//$harga1=0;
+ 	//$harga2=0;
+ 	//$harga3=0;
+ 	//$harga = setTotalHarga($IdP);
+ 	/*if(($IdT != null or $IdT != 0)and($IdP != null or $IdP!=0))
  	{
  		$diskon = getTipe($idT);
 		$harga1 = $harga * 0.01*$diskon;
@@ -371,8 +402,9 @@ function potonganHarga($IdI,$IdT,$IdP){
 		$harga1 = $harga * 0.01*$diskon1;
 		$harga2 = $harga - $harga1;
 		$harga = $harga2;
- 	}
- 	updateHarga($IdI,$harga);
+ 	}*/
+ 	return $harga;
+ 	//updateHarga($IdI,$harga);
  }
 
  function delPesananMinuman($IdP,$IdM){
@@ -454,4 +486,5 @@ function getRow($sql){
  		return null;
  	}
  }
+
  ?>

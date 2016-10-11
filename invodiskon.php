@@ -8,6 +8,7 @@
 				$temp = get("promo");
 				for ($i=0; $i < count($temp); $i++) { 
 					echo ('<option value='.$temp[$i]["Diskon"].'>'.$temp[$i]["Nama"].'</option>');
+					$_SESSION["iddiskon"][]=$temp[$i]["IdPromo"];
 				}
 				
 			 ?>

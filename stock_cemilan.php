@@ -9,7 +9,7 @@ delete("cemilan",$id);
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="stock-style.css">
+<link rel="stylesheet" href="css/stock-style.css">
 </head>
 <body>
 <a href="data_cemilan_insert.php?id=">Insert New</a>

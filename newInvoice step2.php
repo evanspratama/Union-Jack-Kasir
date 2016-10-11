@@ -20,7 +20,10 @@
 	}else if($jenis == 2){
 		$sql = "SELECT * FROM cemilan;";
 		$jenis1 = "cemilan";
-	}else if($jenis == -1){
+	}else if($jenis == 3){
+        $sql = "SELECT * FROM rokok;";
+        $jenis1 = "rokok";
+    }else if($jenis == -1){
 		echo "error";
 	}
 	if($jenis1!=""){
@@ -37,6 +40,9 @@
                 break;
             case 2:
                 $tempid = "IdCemilan";
+                break;
+            case 3:
+                $tempid = "IdRokok";
                 break;
             default:
                 # code...

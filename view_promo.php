@@ -9,7 +9,7 @@ delete("promo",$id);
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="stock-style.css">
+<link rel="stylesheet" href="css/stock-style.css">
 </head>
 <body>
 <a href="insert_promo.php?id=">Insert New</a>

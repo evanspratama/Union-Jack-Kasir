@@ -9,7 +9,7 @@ delete("minuman",$id);
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="stock-style.css">
+<link rel="stylesheet" href="css/stock-style.css">
 </head>
 <body>
 <a href="data_minuman_insert.php?id=">Insert New</a>
@@ -20,17 +20,17 @@ delete("minuman",$id);
 <th>Harga</th>
 <th>Stock</th>
 <th>Tipe</th>
+<th>Deskripsi</th>
 </tr>
 <?php
-$tipe=0;
 for($i=0;$i<sizeof($mnm);$i++){
 echo "<tr><td>";
 $id=$mnm[$i]["IdMinuman"];
-$tipe = $mnm[$i]["tipe"];
 echo $mnm[$i]["IdMinuman"]."</td><td>";
 echo $mnm[$i]["Nama"]."</td><td>";
 echo $mnm[$i]["harga"]."</td><td>";
 echo $mnm[$i]["stock"]."</td><td>";
+$tipe = $mnm[$i]["tipe"];
 if($tipe == 0)
 {
   echo "Botol</td><td>";
@@ -39,6 +39,7 @@ else
 {
   echo "Sloki</td><td>";
 }
+echo $mnm[$i]["deskripsi"]."</td><td>";
 echo "<a href=\"data_minuman_insert.php?id=$id\">Update</a></td><td>";
 echo " <form action='' method='post'><input type='submit' name='delete' value='Delete'></td>";
 echo "</tr>";

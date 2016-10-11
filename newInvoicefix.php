@@ -110,6 +110,9 @@
 			  				case "2":
 			  					$res=get("cemilan","SELECT * FROM cemilan WHERE idCemilan=".$id);
 			  					break;
+			  				case "3":
+			  					$res=get("rokok","SELECT * FROM rokok WHERE idRokok=".$id);
+			  					break;
 			  				default :
 
 			  					break;
@@ -134,10 +137,16 @@
 			    <td colspan="5"><a id="addrow" href="newInvoice step1.php" title="Add a row">Tambah barang</a></td>
 			  </tr>
 			  <?php 
-
+			  	$_SESSION["iddiskon"]= array();
 			   ?>
 			  <tr>
-			      <td colspan="2" class="blank"></td>
+			      <td colspan="2" class="blank">
+			      <select name="jenismember" id="jenismember">
+					<option value="1">non member</option>
+					<option value="2">silver</option>
+					<option value="3">gold</option>
+				</select>
+			      </td>
 			      <td colspan="2" class="total-line">Subtotal</td>
 				  <td class="total-value"><div id="subtotal">
 			      <?php 
@@ -157,11 +166,20 @@
 			      <td colspan="2" class="blank"> 
 					<?php 
 					$disctemp = "";
+					$iddisctemp="";
 					if(isset($_SESSION["diskon"])){
 						foreach($_SESSION['diskon'] as $key=>$value){
 							$disctemp = $disctemp.",".$value."%";
+
 						}
 					}
+					if(isset($_SESSION["iddiskon"])){
+						foreach($_SESSION['iddiskon'] as $key=>$value){
+							$iddisctemp = $iddisctemp.",".$value."%";
+							
+						}
+					}
+					
 					echo ("diskon: ".$disctemp);
 					$_SESSION["diskonstr"] = $disctemp;
 					 ?>
