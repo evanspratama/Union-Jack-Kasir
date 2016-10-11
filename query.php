@@ -64,6 +64,13 @@
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
+	if($type=="temp"){
+		$id=getMaxID("makanan");
+		$id++;
+		$sql="INSERT INTO `temp`(`IdTemp`, `Tipe`, `Id`, `stock`) VALUES('".$id."','".$data[0]."','".$data[1]."',0);";
+		mysqli_query($conn,$sql);
+		return "Data makanan berhasil dimasukan";
+	}
 	
  }
  function get($type,$sql){
@@ -88,6 +95,9 @@
 				$sql="SELECT * FROM promo";
 			break;
 			case "paket":
+				$sql="SELECT * FROM paket";
+			break;
+			case "temp":
 				$sql="SELECT * FROM paket";
 			break;
 			default:
@@ -157,6 +167,24 @@
 		$result[$i]["Diskon"]=$row ["Diskon"];
 		$i++;
 		}
+		if($type== "paket"){
+		$arrayres=mysqli_query($conn,$sql);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["IdPaket"]=$row ["IdPaket"];
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["IdMinuman"]=$row ["IdMinuman"];
+		$result[$i]["Jumlah"]=$row ["Jumlah"];
+		$i++;
+		}
+		if($type== "temp"){
+		$arrayres=mysqli_query($conn,$sql);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["IdTemp"]=$row ["IdTemp"];
+		$result[$i]["Tipe"]=$row ["Tipe"];
+		$result[$i]["Id"]=$row ["Id"];
+		$result[$i]["Stock"]=$row ["Stock"];
+		$i++;
+		}
 	}	
 	return $result;
  }
@@ -179,8 +207,12 @@
 	$sql="UPDATE `rokok` SET `IdRokok`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdRokok='".$id."'";
 	mysqli_query($conn,$sql);
 	}
-	if($type=="makanan"){
+	if($type=="cemilan"){
 	$sql="UPDATE `cemilan` SET `IdCemilan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdCemilan='".$id."'";
+	mysqli_query($conn,$sql);
+	}
+	if($type=="temp"){
+	$sql="UPDATE `temp` SET `IdTemp`='".$id."',`Tipe`='".$data[0]."',`Id`='".$data[1]."',`stock`='".$data[2]."' WHERE IdTemp='".$id."'";
 	mysqli_query($conn,$sql);
 	}
  }
@@ -481,6 +513,12 @@ function potonganHarga($IdI,$IdT,$IdP){
  	$jumlahbaru=$jumlahlama-$jumlah;
  	$sql="UPDATE `rokok` SET `stock`='".$jumlahbaru."' WHERE IdRokok='".$id."'";
 	mysqli_query($conn,$sql);
+ }
+
+ function cutStock(){
+	$sql = "SELECT * from `temp`"
+ 	for($i=0;$i<sizeof($makan);$i++){
+}
  }
 
 function getRow($sql){
