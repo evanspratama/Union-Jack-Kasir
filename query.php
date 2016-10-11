@@ -475,6 +475,14 @@ function potonganHarga($IdI,$IdT,$IdP){
 	mysqli_query($conn,$sql);
  }
 
+ function cutRokokByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `rokok` where `IdRokok`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama-$jumlah;
+ 	$sql="UPDATE `rokok` SET `stock`='".$jumlahbaru."' WHERE IdRokok='".$id."'";
+	mysqli_query($conn,$sql);
+ }
+
 function getRow($sql){
 	global $conn;
  	if($result=mysqli_query($conn,$sql)){
