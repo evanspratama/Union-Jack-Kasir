@@ -450,6 +450,7 @@ function potonganHarga($IdI,$IdT,$IdP){
 	$idI=mysqli_query($conn,$sql);
 	updateHarga($IdI,$harga);
  }
+
  function cutMinumanByNumber($id,$jumlah){
  	$sql="SELECT `stock` from `minuman` where `IdMinuman`='".$id."'";
  	$jumlahlama=mysqli_query($conn,$sql);
@@ -457,6 +458,23 @@ function potonganHarga($IdI,$IdT,$IdP){
  	$sql="UPDATE `minuman` SET `stock`='".$jumlahbaru."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
  }
+
+ function plusMakananByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `makanan` where `IdMakanan`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama+$jumlah;
+ 	$sql="UPDATE `makanan` SET `stock`='".$jumlahbaru."' WHERE IdMakanan='".$id."'";
+	mysqli_query($conn,$sql);
+ }
+
+ function cutCemilanByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `cemilan` where `IdCemilan`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama-$jumlah;
+ 	$sql="UPDATE `cemilan` SET `stock`='".$jumlahbaru."' WHERE IdCemilan='".$id."'";
+	mysqli_query($conn,$sql);
+ }
+
 function getRow($sql){
 	global $conn;
  	if($result=mysqli_query($conn,$sql)){
