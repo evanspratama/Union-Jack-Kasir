@@ -18,8 +18,16 @@
 	if($type == "cemilan"){
 	$sql = "SELECT max(IdCemilan) as res from cemilan";		 
 	}
+<<<<<<< HEAD
 		if($type == "invoice"){
 	$sql = "SELECT max(IdInvoice) as res from invoice";		 
+=======
+	if($type == "paket"){
+	$sql = "SELECT max(IdPaket) as res from paket";		 
+	}
+	if($type == "temp"){
+	$sql = "SELECT max(IdTemp) as res from temp";		 
+>>>>>>> origin/master
 	}
 	$res = mysqli_fetch_assoc(mysqli_query($conn,$sql));
 	return $res["res"];
@@ -60,10 +68,24 @@
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
+<<<<<<< HEAD
 	if($type=="invoice"){
 		$id=getMaxID("invoice");
 		$id++;
 		$sql="INSERT INTO `invoice`(`IdInvoice`, `idPengguna`, `TotalHarga`, `Tanggal`,`Tipe`,`IdPromo`,`promo`,`status`) VALUES('".$id."',1,'".$data[1]."','".$data[2]."','1',1,'".$data[4]."','".$data[5]."');";
+=======
+	if($type=="paket"){
+		$id=getMaxID("paket");
+		$id++;
+		$sql="INSERT INTO `paket`(`IdPaket`, `Nama`, `IdMinuman`,`jumlah`) Values('".$id."','".$data[0]."','".$data[1]."','".$data[2]."');";
+		mysqli_query($conn,$sql);
+		return "Data makanan berhasil dimasukan";
+	}
+	if($type=="temp"){
+		$id=getMaxID("makanan");
+		$id++;
+		$sql="INSERT INTO `temp`(`IdTemp`, `Tipe`, `Id`, `stock`) VALUES('".$id."','".$data[0]."','".$data[1]."',0);";
+>>>>>>> origin/master
 		mysqli_query($conn,$sql);
 		return "Data makanan berhasil dimasukan";
 	}
@@ -89,6 +111,12 @@
 			break;
 			case "promo":
 				$sql="SELECT * FROM promo";
+			break;
+			case "paket":
+				$sql="SELECT * FROM paket";
+			break;
+			case "temp":
+				$sql="SELECT * FROM temp";
 			break;
 			default:
 				return null;
@@ -162,6 +190,24 @@
 		$result[$i]["Diskon"]=$row ["Diskon"];
 		$i++;
 		}
+		if($type== "paket"){
+		$arrayres=mysqli_query($conn,$sql);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["IdPaket"]=$row ["IdPaket"];
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["IdMinuman"]=$row ["IdMinuman"];
+		$result[$i]["Jumlah"]=$row ["Jumlah"];
+		$i++;
+		}
+		if($type== "temp"){
+		$arrayres=mysqli_query($conn,$sql);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["IdTemp"]=$row ["IdTemp"];
+		$result[$i]["Tipe"]=$row ["Tipe"];
+		$result[$i]["Id"]=$row ["Id"];
+		$result[$i]["Stock"]=$row ["Stock"];
+		$i++;
+		}
 	}	
 	return $result;
  }
@@ -184,8 +230,16 @@
 	$sql="UPDATE `rokok` SET `IdRokok`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdRokok='".$id."'";
 	mysqli_query($conn,$sql);
 	}
-	if($type=="makanan"){
+	if($type=="cemilan"){
 	$sql="UPDATE `cemilan` SET `IdCemilan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdCemilan='".$id."'";
+	mysqli_query($conn,$sql);
+	}
+	if($type=="paket"){
+	$sql="UPDATE `paket` SET `IdPaket`='".$id."',`Nama`='".$data[0]."',`IdMinuman`='".$data[1]."',`jumlah`='".$data[2]."' WHERE IdCemilan='".$id."'";
+	mysqli_query($conn,$sql);
+	}
+	if($type=="temp"){
+	$sql="UPDATE `temp` SET `IdTemp`='".$id."',`Tipe`='".$data[0]."',`Id`='".$data[1]."',`stock`='".$data[2]."' WHERE IdTemp='".$id."'";
 	mysqli_query($conn,$sql);
 	}
  }
@@ -471,6 +525,7 @@ function potonganHarga($IdT,$harga){
 	$idI=mysqli_query($conn,$sql);
 	updateHarga($IdI,$harga);
  }
+
  function cutMinumanByNumber($id,$jumlah){
  	$sql="SELECT `stock` from `minuman` where `IdMinuman`='".$id."'";
  	$jumlahlama=mysqli_query($conn,$sql);
@@ -478,6 +533,51 @@ function potonganHarga($IdT,$harga){
  	$sql="UPDATE `minuman` SET `stock`='".$jumlahbaru."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
  }
+
+ function plusMakananByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `makanan` where `IdMakanan`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama+$jumlah;
+ 	$sql="UPDATE `makanan` SET `stock`='".$jumlahbaru."' WHERE IdMakanan='".$id."'";
+	mysqli_query($conn,$sql);
+ }
+
+ function cutCemilanByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `cemilan` where `IdCemilan`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama-$jumlah;
+ 	$sql="UPDATE `cemilan` SET `stock`='".$jumlahbaru."' WHERE IdCemilan='".$id."'";
+	mysqli_query($conn,$sql);
+ }
+
+ function cutRokokByNumber($id,$jumlah){
+ 	$sql="SELECT `stock` from `rokok` where `IdRokok`='".$id."'";
+ 	$jumlahlama=mysqli_query($conn,$sql);
+ 	$jumlahbaru=$jumlahlama-$jumlah;
+ 	$sql="UPDATE `rokok` SET `stock`='".$jumlahbaru."' WHERE IdRokok='".$id."'";
+	mysqli_query($conn,$sql);
+ }
+
+ function cutStock(){
+	$sql = "SELECT * from `temp`"
+	$temp= get("temp",sql)
+ 	for($i=0;$i<sizeof($temp);$i++){
+	if($temp[$i]["Tipe"]== 0){
+	plusMakananByNumber($temp[$i]["Id"],$temp[$i]["Stock"]); 		
+	}
+	if($temp[$i]["Tipe"]== 1){
+	cutMinumanByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	if($temp[$i]["Tipe"]== 2){
+	cutCemilanByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	if($temp[$i]["Tipe"]== 3){
+	cutRokokByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	delete("temp",i+1);
+}
+ }
+
 function getRow($sql){
 	global $conn;
  	if($result=mysqli_query($conn,$sql)){
