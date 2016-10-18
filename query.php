@@ -471,36 +471,45 @@ function potonganHarga($IdT,$harga){
 	updateHarga($IdI,$harga);
  }
  function cutMinumanByNumber($id,$jumlah){
- 	$sql="SELECT `stock` from `minuman` where `IdMinuman`='".$id."'";
- 	$jumlahlama=mysqli_query($conn,$sql);
+ 	global $conn;
+ 	$sql="SELECT * from `minuman` where `IdMinuman`='".$id."'";
+ 	$res=get("minuman",$sql);
+ 	$jumlahlama=$res[0]["stock"];
  	$jumlahbaru=$jumlahlama-$jumlah;
  	$sql="UPDATE `minuman` SET `stock`='".$jumlahbaru."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
  }
  function plusMakananByNumber($id,$jumlah){
- 	$sql="SELECT `stock` from `makanan` where `IdMakanan`='".$id."'";
- 	$jumlahlama=mysqli_query($conn,$sql);
+ 	global $conn;
+ 	$sql="SELECT * from `makanan` where `IdMakanan`='".$id."'";
+ 	 $res=get("makanan",$sql);
+ 	$jumlahlama=$res[0]["stock"];
  	$jumlahbaru=$jumlahlama+$jumlah;
  	$sql="UPDATE `makanan` SET `stock`='".$jumlahbaru."' WHERE IdMakanan='".$id."'";
 	mysqli_query($conn,$sql);
  }
  function cutCemilanByNumber($id,$jumlah){
- 	$sql="SELECT `stock` from `cemilan` where `IdCemilan`='".$id."'";
- 	$jumlahlama=mysqli_query($conn,$sql);
+ 	global $conn;
+ 	$sql="SELECT * from `cemilan` where `IdCemilan`='".$id."'";
+ 	 $res=get("cemilan",$sql);
+ 	$jumlahlama=$res[0]["stock"];
  	$jumlahbaru=$jumlahlama-$jumlah;
  	$sql="UPDATE `cemilan` SET `stock`='".$jumlahbaru."' WHERE IdCemilan='".$id."'";
 	mysqli_query($conn,$sql);
  }
  function cutRokokByNumber($id,$jumlah){
- 	$sql="SELECT `stock` from `rokok` where `IdRokok`='".$id."'";
- 	$jumlahlama=mysqli_query($conn,$sql);
+ 	global $conn;
+ 	$sql="SELECT * from `rokok` where `IdRokok`='".$id."'";
+ 	$res=get("rokok",$sql);
+ 	$jumlahlama=$res[0]["stock"];
  	$jumlahbaru=$jumlahlama-$jumlah;
  	$sql="UPDATE `rokok` SET `stock`='".$jumlahbaru."' WHERE IdRokok='".$id."'";
 	mysqli_query($conn,$sql);
  }
  function cutStock(){
-	$sql = "SELECT * from `temp`"
-	$temp= get("temp",sql)
+ 	global $conn;
+	$sql = "SELECT * from `temp`";
+	$temp= get("temp",sql);
  	for($i=0;$i<sizeof($temp);$i++){
 	if($temp[$i]["Tipe"]== 0){
 	plusMakananByNumber($temp[$i]["Id"],$temp[$i]["Stock"]); 		
@@ -514,7 +523,7 @@ function potonganHarga($IdT,$harga){
 	if($temp[$i]["Tipe"]== 3){
 	cutRokokByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
 	}
-	delete("temp",i+1);
+	delete("temp",$i+1);
 }
  }
 function getRow($sql){
