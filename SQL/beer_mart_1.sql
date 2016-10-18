@@ -27,21 +27,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `invoice` (
+  CREATE TABLE `invoice` (
   `IdInvoice` int(11) NOT NULL,
   `idPengguna` int(11) DEFAULT NULL,
   `TotalHarga` int(11) DEFAULT NULL,
   `Tanggal` date DEFAULT NULL,
   `Tipe` int(11) DEFAULT NULL,
-  `IdPromo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Status` int(11) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`IdInvoice`, `idPengguna`, `TotalHarga`, `Tanggal`, `Tipe`, `IdPromo`) VALUES
-(90316003, 1, 30000, '2016-09-03', 1, NULL),
-(90316004, 1, 25000, '2016-09-03', 3, NULL);
+INSERT INTO `invoice` (`IdInvoice`, `idPengguna`, `TotalHarga`, `Tanggal`, `Tipe`,`Status`) VALUES
+(90316003, 1, 30000, '2016-09-03', 1, 0),
+(90316004, 1, 25000, '2016-09-03', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -53,8 +53,7 @@ CREATE TABLE `makanan` (
   `IdMakanan` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL,
-  'deskripsi' varchar(255) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -83,8 +82,7 @@ CREATE TABLE `rokok` (
   `IdRokok` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL.
-  'deskripsi' varchar(255) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -97,8 +95,7 @@ CREATE TABLE `cemilan` (
   `IdCemilan` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL,
-  'deskripsi' varchar(255) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -133,8 +130,7 @@ CREATE TABLE `minuman` (
   `Nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
-  `tipe` int(11) DEFAULT NULL,
-  'deskripsi' varchar(255) DEFAULT NULL,
+  `tipe` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -206,6 +202,15 @@ CREATE TABLE `pesanan_makanan` (
 CREATE TABLE `pesanan_rokok` (
   `IdPesanan` int(11) DEFAULT NULL,
   `IdRokok` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `invoice_promo`
+--
+
+CREATE TABLE `invoice_promo` (
+  `IdInvoice` int(11) DEFAULT NULL,
+  `IdPromo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -371,6 +376,14 @@ ALTER TABLE `pesanan_makanan`
   ADD KEY `IdMakanan` (`IdMakanan`);
   
 --
+-- Indexes for table `invoice_promo`
+--
+ALTER TABLE `pesanan_makanan`
+  ADD KEY `IdInvoice` (`IdInvoice`),
+  ADD KEY `IdPromo` (`IdPromo`);
+
+
+--
 -- Indexes for table `pesanan_rokok`
 --
 ALTER TABLE `pesanan_rokok`
@@ -434,6 +447,14 @@ ALTER TABLE `hutang`
 ALTER TABLE `pesanan_makanan`
   ADD CONSTRAINT `pesanan_makanan_ibfk_1` FOREIGN KEY (`IdPesanan`) REFERENCES `pesanan` (`IdPesanan`),
   ADD CONSTRAINT `pesanan_makanan_ibfk_2` FOREIGN KEY (`IdMakanan`) REFERENCES `makanan` (`IdMakanan`);
+
+--
+-- Constraints for table `invoice_promo`
+--
+ALTER TABLE `pesanan_makanan`
+  ADD CONSTRAINT `invoice_promo_ibfk_1` FOREIGN KEY (`IdInvoice`) REFERENCES `invoice` (`IdInvoice`),
+  ADD CONSTRAINT `pesanan_makanan_ibfk_2` FOREIGN KEY (`IdPromo`) REFERENCES `promo` (`IdPromo`);
+
 
 --
 -- Constraints for table `pesanan_rokok`
