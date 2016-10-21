@@ -183,7 +183,7 @@
 	$sql="UPDATE `rokok` SET `IdRokok`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdRokok='".$id."'";
 	mysqli_query($conn,$sql);
 	}
-	if($type=="makanan"){
+	if($type=="cemilan"){
 	$sql="UPDATE `cemilan` SET `IdCemilan`='".$id."',`Nama`='".$data[0]."',`harga`='".$data[1]."',`stock`='".$data[2]."' WHERE IdCemilan='".$id."'";
 	mysqli_query($conn,$sql);
 	}
@@ -475,7 +475,14 @@ function potonganHarga($IdT,$harga){
  	$sql="SELECT * from `minuman` where `IdMinuman`='".$id."'";
  	$res=get("minuman",$sql);
  	$jumlahlama=$res[0]["stock"];
+ 	if($res[0]["tipe"]==2)
+ 	{
+ 		$jumlahbaru=$jumlahlama+$jumlah;
+ 	}
+ 	else
+ 	{
  	$jumlahbaru=$jumlahlama-$jumlah;
+ }
  	$sql="UPDATE `minuman` SET `stock`='".$jumlahbaru."' WHERE IdMinuman='".$id."'";
 	mysqli_query($conn,$sql);
  }
@@ -526,6 +533,12 @@ function potonganHarga($IdT,$harga){
 	delete("temp",$i+1);
 }
  }
+function resetJualMakanan($id){
+	global $conn;
+	$sql="UPDATE `makanan` SET `stock`= 0 WHERE IdMakanan='".$id."'";
+	mysqli_query($conn,$sql);
+
+}
 function getRow($sql){
 	global $conn;
  	if($result=mysqli_query($conn,$sql)){

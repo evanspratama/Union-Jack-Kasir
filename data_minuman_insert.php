@@ -31,7 +31,8 @@ $result=get("minuman","SELECT * FROM `minuman` WHERE IdMinuman='" .$_GET["id"]. 
 <tr>
 <td>Tipe	: </td><td><?php echo " <select name='tipe' id='tipe'>
   <option value= 0>Botol</option>
-  <option value= 1>Sloki</option>
+  <option value= 1>Sloki/Gelas</option>
+  <option value= 2>Made</option>
 </select> "; 
 //$data[3]=
 ?></td>

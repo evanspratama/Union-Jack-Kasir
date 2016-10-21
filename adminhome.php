@@ -14,11 +14,12 @@
 </div>
 <div id="pilihan">
 <ul>
-<li><a href="stock_makanan.php">Stock Makanan</a></li>
+<li><a href="stock_makanan.php">Penjualan Makanan</a></li>
 <li><a href="stock_minuman.php">Stock Minuman</a></li>
+<li><a href="stock_cemilan.php">Stock Cemilan</a></li>
+<li><a href="data_rokok.php">Stock Rokok</a></li>
 <li><a href="view_invoice.php">Invoice</a></li>
-<li><a href="stock_cemilan.php">Cemilan</a></li>
-<li><a href="data_rokok.php">Rokok</a></li>
+<li><a href="changepassword1.php">Ganti password</a></li>
 <li><a href="logout.php">Log out</a></li>
 </ul>
 </div>

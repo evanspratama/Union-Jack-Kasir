@@ -35,9 +35,13 @@ if($tipe == 0)
 {
   echo "Botol</td><td>";
 }
+else if($tipe == 2)
+{
+  echo "Made</td><td>";
+}
 else
 {
-  echo "Sloki</td><td>";
+  echo "Sloki/Gelas</td><td>";
 }
 echo $mnm[$i]["deskripsi"]."</td><td>";
 echo "<a href=\"data_minuman_insert.php?id=$id\">Update</a></td><td>";
