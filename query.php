@@ -105,6 +105,7 @@
 		$result[$i]["Tipe"]=$row ["Tipe"];
 		$result[$i]["IdPromo"]=$row ["IdPromo"];
 		$result[$i]["status"]=$row ["status"];
+		$result[$i]["NamaPending"]=$row ["NamaPending"];
 		$i++;
 		}
 		}
@@ -153,6 +154,22 @@
 			$i++;
 			}
 		}	
+
+		if($type== "menu"){
+			$arrayres=mysqli_query($conn,$sql);
+			while($row = mysqli_fetch_assoc($arrayres)){
+			$result[$i]["IdMenu"]=$row ["IdMenu"];
+			$result[$i]["Nama"]=$row ["Nama"];
+			$result[$i]["IdMakanan"]=$row ["IdMakanan"];
+			$result[$i]["JumlahMakanan"]=$row ["JumlahMakanan"];
+			$result[$i]["IdMinuman"]=$row ["IdMinuman"];
+			$result[$i]["JumlahMinuman"]=$row ["JumlahMinuman"];
+			$result[$i]["IdCemilan"]=$row ["IdCemilan"];
+			$result[$i]["JumlahCemilan"]=$row ["JumlahCemilan"];
+			$i++;
+			}
+		}
+
 		if($type== "promo"){
 		$arrayres=mysqli_query($conn,$sql);
 		while($row = mysqli_fetch_assoc($arrayres)){
@@ -513,6 +530,24 @@ function potonganHarga($IdT,$harga){
  	$sql="UPDATE `rokok` SET `stock`='".$jumlahbaru."' WHERE IdRokok='".$id."'";
 	mysqli_query($conn,$sql);
  }
+  function cutFromMenu($id){
+ 	global $conn;
+ 	$sql="SELECT * from `menu` where `IdMenu`='".$id."'";
+ 	$res=get("menu",$sql);
+ 	$sql2="SELECT * from `menu` where `Nama`='".$res[0]["Nama"]."'";
+ 	$res1=get("menu",$sql2);
+ 	for($i=0;$i<sizeof($res1);$i++){
+ 		if($res1[$i]["IdMinuman"] != 0){
+ 		cutMinumanByNumber($res1[$i]["IdMinuman"],$res1[$i]["JumlahMinuman"]);
+ 	}
+ 	if($res1[$i]["IdMakanan"] != 0){
+ 		plusMakananByNumber($res1[$i]["IdMakanan"],$res1[$i]["JumlahMakanan"]);
+ 	}
+ 	if($res1[$i]["IdCemilan"] != 0){
+ 		cutCemilanByNumber($res1[$i]["IdCemilan"],$res1[$i]["JumlahCemilan"]);
+ 	}
+ 	}
+ }
  function cutStock(){
  	global $conn;
 	$sql = "SELECT * from `temp`";
@@ -529,6 +564,9 @@ function potonganHarga($IdT,$harga){
 	}
 	if($temp[$i]["Tipe"]== 3){
 	cutRokokByNumber($temp[$i]["Id"],$temp[$i]["Stock"]);
+	}
+	if($temp[$i]["Tipe"]== 4){
+	cutFromMenu($temp[$i]["Id"]);
 	}
 	delete("temp",$i+1);
 }

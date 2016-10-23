@@ -21,6 +21,7 @@ delete("Invoice",$id);
 <td>Tipe_Pelanggan</td>
 <td>IdPromo</td>
 <td>Status</td>
+<td>NamaPending</td>
 <td></td>
 <td></td>
 </tr>
@@ -45,10 +46,11 @@ echo "Pending</td><td>";
 if($tipe==2){
 echo "Pelunasan Pending</td><td>";
 }
-echo "<a href=\"newInvoice.php?id=$id\">View</a></td><td>";
-//echo " <form action='' method='post'><input type='submit' name='delete' value='Delete'></td>";
-//echo "</tr>";
-//echo "<input type='hidden' value='$id' name='delid'></form>";
+echo $mkn[$i]["NamaPending"]."</td><td>";
+//echo "<a href=\"newInvoice.php?id=$id\">View</a></td><td>";
+echo " <form action='' method='post'><input type='submit' name='delete' value='Delete'></td>";
+echo "</tr>";
+echo "<input type='hidden' value='$id' name='delid'></form>";
 }
 echo "</table>";
 ?>
