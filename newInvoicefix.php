@@ -13,6 +13,7 @@
 	<link rel='stylesheet' type='text/css' href='css/style.css' />
 	<link rel='stylesheet' type='text/css' href='css/print.css' media="print" />
 	<script type='text/javascript' src='js/jquery-1.3.2.min.js'></script>
+	<script type="text/javascript" src="js/autoEnterCurrentDate.js"></script>
 	<!--<script type='text/javascript' src='js/example.js'></script>-->
 
 </head>
@@ -63,7 +64,7 @@
 
 	                    <td class="meta-head">Date</td>
 	                    <td><!--<p id="date">December 15, 2009</p>-->
-							 <input type="date" name="date"/>
+							 <input name="date" id="date"/></td>
 	                </tr>
 	                <!--
 	                <tr>
@@ -169,8 +170,10 @@
 					$iddisctemp="";
 					if(isset($_SESSION["diskon"])){
 						foreach($_SESSION['diskon'] as $key=>$value){
-							$disctemp = $disctemp.",".$value."%";
-
+							//$disctemp = $disctemp.",".$value."%";
+							if($value<101){
+								$disctemp = $disctemp.',<a href="delDiskon.php?del='.$value.'">'.$value.'%</a>';
+							}
 						}
 					}
 					if(isset($_SESSION["iddiskon"])){
@@ -193,11 +196,14 @@
 				      $res=$_SESSION["subtotal"];
 				      	if (isset($_SESSION['diskon'])) {
 				      		foreach($_SESSION['diskon'] as $key=>$value){
-						     	if($res==$_SESSION["subtotal"]){
-						        	$res = $_SESSION["subtotal"]-((int) $_SESSION["subtotal"]/100 * $value);
-						    	}else{
-						    		$res = $res-($res/100 * $value);
-						    	}
+						     	//if($res==$_SESSION["subtotal"]){
+						        	//$res = $_SESSION["subtotal"]-((int) $_SESSION["subtotal"]/100 * $value);
+						    	//}else{
+						    		//$res = $res-($res/100 * $value);
+						    	//}
+								if($value<101){
+									$res = $res-($res/100 * $value);
+								}
 					      	}
 				      	}
 
