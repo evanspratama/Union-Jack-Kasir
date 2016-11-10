@@ -534,5 +534,40 @@ function getRow($sql){
  		return null;
  	}
  }
+function laporan($date1,$date2){
+	global $conn;
+	$i=0;
+	$result=array();
+	$sql1="SELECT `nama`,`count(IdMakanan) as Jumlah` from `pesanan p` join `pesanan_makanan pm` on `p.IdPesanan=pm.IdPesanan` join `makanan m` on `pm.IdMakanan` = `m.IdMakanan` where '".$date1."' >= `p.tanggal` and '".$date2."' <= `p.tanggal`";
+	$sql2="SELECT `nama`,`count(IdMinuman) as Jumlah` from `pesanan p` join `pesanan_minuman pm` on `p.IdPesanan=pm.IdPesanan` join `minuman m` on `pm.IdMinuman` = `m.IdMinuman` where '".$date1."' >= `p.tanggal` and '".$date2."' <= `p.tanggal`";
+	$sql3="SELECT `nama`,`count(IdRokok) as Jumlah` from `pesanan p` join `pesanan_rokok pm` on `p.IdPesanan=pm.IdPesanan` join `rokok m` on `pm.IdRokok` = `m.IdRokok` where '".$date1."' >= `p.tanggal` and '".$date2."' <= `p.tanggal`";
+	$sql4="SELECT `nama`,`count(IdCemilan) as Jumlah` from `pesanan p` join `pesanan_cemilan pm` on `p.IdPesanan=pm.IdPesanan` join `cemilan m` on `pm.IdCemilan` = `m.IdCemilan` where '".$date1."' >= `p.tanggal` and '".$date2."' <= `p.tanggal`";
+	$arrayres=mysqli_query($conn,$sql1);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["Jumlah"]=$row ["Jumlah"];
+		$i++;
+		}
+	$arrayres=mysqli_query($conn,$sql2);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["Jumlah"]=$row ["Jumlah"];
+		$i++;
+		}
+	$arrayres=mysqli_query($conn,$sql3);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["Jumlah"]=$row ["Jumlah"];
+		$i++;
+		}
+	$arrayres=mysqli_query($conn,$sql4);
+		while($row = mysqli_fetch_assoc($arrayres)){
+		$result[$i]["Nama"]=$row ["Nama"];
+		$result[$i]["Jumlah"]=$row ["Jumlah"];
+		$i++;
+		}
+	return $result;
+}
+
 
  ?>
